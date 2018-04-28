@@ -463,22 +463,27 @@ public class RocksDB extends RocksObject {
    * Set the database entry for "key" to "value"
    *
    * @param key The specified key to be inserted
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("key".length -  offset)
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value the value associated with the specified key
-   * @param vOffset the offset of the "value" array to be used, must be non-negative and
-   *               no longer than "key".length
-   * @param vLen the length of the "value" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("value".length -  offset)
+   * @param valueOffset the offset of the "value" array to be used, must be
+   *    non-negative and no longer than "key".length
+   * @param valueLength the length of the "value" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("value".length - offset)
    *
-   * @throws RocksDBException thrown if errors happens in underlying native library.
+   * @throws RocksDBException thrown if errors happens in underlying native
+   *    library.
    */
-  public void put(final byte[] key, int offset, int len, final byte[] value, int vOffset, int vLen) throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    checkBounds(vOffset, vLen, value.length);
-    put(nativeHandle_, key, offset, len, value, vOffset, vLen);
+  public void put(final byte[] key, final int keyOffset, final int keyLen,
+          final byte[] value, final int valueOffset, final int valueLength)
+      throws RocksDBException {
+    checkBounds(keyOffset, keyLen, key.length);
+    checkBounds(valueOffset, valueLength, value.length);
+    put(nativeHandle_, key, keyOffset, keyLen, value, valueOffset, valueLength);
   }
 
   /**
@@ -508,22 +513,28 @@ public class RocksDB extends RocksObject {
    * @param columnFamilyHandle {@link org.rocksdb.ColumnFamilyHandle}
    *     instance
    * @param key The specified key to be inserted
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("key".length -  offset)
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value the value associated with the specified key
-   * @param vOffset the offset of the "value" array to be used, must be non-negative and
-   *               no longer than "key".length
-   * @param vLen the length of the "value" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("value".length -  offset)
+   * @param valueOffset the offset of the "value" array to be used, must be
+   *    non-negative and no longer than "key".length
+   * @param valueLength the length of the "value" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("value".length - offset)
    *
-   * @throws RocksDBException thrown if errors happens in underlying native library.
+   * @throws RocksDBException thrown if errors happens in underlying native
+   *    library.
    */
-  public void put(final ColumnFamilyHandle columnFamilyHandle, final byte[] key, int offset, int len, final byte[] value, int vOffset, int vLen) throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    checkBounds(vOffset, vLen, value.length);
-    put(nativeHandle_, key, offset, len, value, vOffset, vLen,
+  public void put(final ColumnFamilyHandle columnFamilyHandle,
+          final byte[] key, final int keyOffset, final int keyLen,
+          final byte[] value, final int valueOffset, final int valueLength)
+      throws RocksDBException {
+    checkBounds(keyOffset, keyLen, key.length);
+    checkBounds(valueOffset, valueLength, value.length);
+    put(nativeHandle_, key, keyOffset, keyLen, value, valueOffset, valueLength,
         columnFamilyHandle.nativeHandle_);
   }
 
@@ -548,24 +559,28 @@ public class RocksDB extends RocksObject {
    *
    * @param writeOpts {@link org.rocksdb.WriteOptions} instance.
    * @param key The specified key to be inserted
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("key".length -  offset)
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value the value associated with the specified key
-   * @param vOffset the offset of the "value" array to be used, must be non-negative and
-   *               no longer than "key".length
-   * @param vLen the length of the "value" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("value".length -  offset)
+   * @param valueOffset the offset of the "value" array to be used, must be
+   *    non-negative and no longer than "key".length
+   * @param valueLength the length of the "value" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("value".length - offset)
    *
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
-  public void put(final WriteOptions writeOpts, byte[] key, int offset, int len, byte[] value, int vOffset, int vLen) throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    checkBounds(vOffset, vLen, value.length);
+  public void put(final WriteOptions writeOpts, final byte[] key,
+          final int keyOffset, final int keyLen, final byte[] value,
+          final int valueOffset, final int valueLength) throws RocksDBException {
+    checkBounds(keyOffset, keyLen, key.length);
+    checkBounds(valueOffset, valueLength, value.length);
     put(nativeHandle_, writeOpts.nativeHandle_,
-        key, offset, len, value, vOffset, vLen);
+        key, keyOffset, keyLen, value, valueOffset, valueLength);
   }
 
 
@@ -600,26 +615,30 @@ public class RocksDB extends RocksObject {
    *     instance
    * @param writeOpts {@link org.rocksdb.WriteOptions} instance.
    * @param key The specified key to be inserted
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("key".length -  offset)
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value the value associated with the specified key
-   * @param vOffset the offset of the "value" array to be used, must be non-negative and
-   *               no longer than "key".length
-   * @param vLen the length of the "value" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("value".length -  offset)
+   * @param valueOffset the offset of the "value" array to be used, must be
+   *    non-negative and no longer than "key".length
+   * @param valueLength the length of the "value" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("value".length - offset)
    *
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
   public void put(final ColumnFamilyHandle columnFamilyHandle,
-      final WriteOptions writeOpts, final byte[] key, int offset, int len,
-      final byte[] value, int vOffset, int vLen) throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    checkBounds(vOffset, vLen, value.length);
-    put(nativeHandle_, writeOpts.nativeHandle_, key, offset, len, value,
-        vOffset, vLen, columnFamilyHandle.nativeHandle_);
+          final WriteOptions writeOpts, final byte[] key, final int keyOffset,
+          final int keyLen, final byte[] value, final int valueOffset,
+          final int valueLength)
+      throws RocksDBException {
+    checkBounds(keyOffset, keyLen, key.length);
+    checkBounds(valueOffset, valueLength, value.length);
+    put(nativeHandle_, writeOpts.nativeHandle_, key, keyOffset, keyLen, value,
+        valueOffset, valueLength, columnFamilyHandle.nativeHandle_);
   }
 
   /**
@@ -646,17 +665,20 @@ public class RocksDB extends RocksObject {
    * to make this lighter weight is to avoid doing any IOs.
    *
    * @param key byte array of a key to search for
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value StringBuilder instance which is a out parameter if a value is
    *    found in block-cache.
    *
    * @return boolean value indicating if key does not exist or might exist.
    */
-  public boolean keyMayExist(final byte[] key, int offset, int len, final StringBuilder value) {
-    checkBounds(offset, len, key.length);
-    return keyMayExist(nativeHandle_, key, offset, len, value);
+  public boolean keyMayExist(final byte[] key, final int keyOffset,
+          final int keyLen, final StringBuilder value) {
+    checkBounds(keyOffset, keyLen, key.length);
+    return keyMayExist(nativeHandle_, key, keyOffset, keyLen, value);
   }
 
   /**
@@ -687,17 +709,20 @@ public class RocksDB extends RocksObject {
    *
    * @param columnFamilyHandle {@link ColumnFamilyHandle} instance
    * @param key byte array of a key to search for
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value StringBuilder instance which is a out parameter if a value is
    *    found in block-cache.
    * @return boolean value indicating if key does not exist or might exist.
    */
   public boolean keyMayExist(final ColumnFamilyHandle columnFamilyHandle,
-      final byte[] key, int offset, int len, final StringBuilder value) {
-    checkBounds(offset, len, key.length);
-    return keyMayExist(nativeHandle_, key, offset, len,
+          final byte[] key, final int keyOffset, final int keyLen,
+          final StringBuilder value) {
+    checkBounds(keyOffset, keyLen, key.length);
+    return keyMayExist(nativeHandle_, key, keyOffset, keyLen,
         columnFamilyHandle.nativeHandle_, value);
   }
 
@@ -730,18 +755,21 @@ public class RocksDB extends RocksObject {
    *
    * @param readOptions {@link ReadOptions} instance
    * @param key byte array of a key to search for
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value StringBuilder instance which is a out parameter if a value is
    *    found in block-cache.
    * @return boolean value indicating if key does not exist or might exist.
    */
   public boolean keyMayExist(final ReadOptions readOptions,
-      final byte[] key, int offset, int len, final StringBuilder value) {
-    checkBounds(offset, len, key.length);
+          final byte[] key, final int keyOffset, final int keyLen,
+          final StringBuilder value) {
+    checkBounds(keyOffset, keyLen, key.length);
     return keyMayExist(nativeHandle_, readOptions.nativeHandle_,
-        key, offset, len, value);
+        key, keyOffset, keyLen, value);
   }
 
   /**
@@ -776,19 +804,21 @@ public class RocksDB extends RocksObject {
    * @param readOptions {@link ReadOptions} instance
    * @param columnFamilyHandle {@link ColumnFamilyHandle} instance
    * @param key byte array of a key to search for
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value StringBuilder instance which is a out parameter if a value is
    *    found in block-cache.
    * @return boolean value indicating if key does not exist or might exist.
    */
   public boolean keyMayExist(final ReadOptions readOptions,
-      final ColumnFamilyHandle columnFamilyHandle, final byte[] key, int offset, int len,
-      final StringBuilder value) {
-    checkBounds(offset, len, key.length);
+          final ColumnFamilyHandle columnFamilyHandle, final byte[] key,
+          final int keyOffset, final int keyLen, final StringBuilder value) {
+    checkBounds(keyOffset, keyLen, key.length);
     return keyMayExist(nativeHandle_, readOptions.nativeHandle_,
-        key, offset, len, columnFamilyHandle.nativeHandle_,
+        key, keyOffset, keyLen, columnFamilyHandle.nativeHandle_,
         value);
   }
 
@@ -839,23 +869,27 @@ public class RocksDB extends RocksObject {
    * Add merge operand for key/value pair.
    *
    * @param key the specified key to be merged.
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value the value to be merged with the current value for the specified key.
-   * @param vOffset the offset of the "value" array to be used, must be non-negative and
-   *               no longer than "key".length
-   * @param vLen the length of the "value" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("value".length -  offset)
+   * @param valueOffset the offset of the "value" array to be used, must be
+   *    non-negative and no longer than "key".length
+   * @param valueLength the length of the "value" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("value".length - offset)
    *
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
-  public void merge(final byte[] key, int offset, int len, final byte[] value, int vOffset, int vLen)
+  public void merge(final byte[] key, final int keyOffset, final int keyLen,
+          final byte[] value, final int valueOffset, final int valueLength)
       throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    checkBounds(vOffset, vLen, value.length);
-    merge(nativeHandle_, key, offset, len, value, vOffset, vLen);
+    checkBounds(keyOffset, keyLen, key.length);
+    checkBounds(valueOffset, valueLength, value.length);
+    merge(nativeHandle_, key, keyOffset, keyLen, value, valueOffset, valueLength);
   }
 
 
@@ -881,24 +915,29 @@ public class RocksDB extends RocksObject {
    *
    * @param columnFamilyHandle {@link ColumnFamilyHandle} instance
    * @param key the specified key to be merged.
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value the value to be merged with the current value for
-   * the specified key.
-   * @param vOffset the offset of the "value" array to be used, must be non-negative and
-   *               no longer than "key".length
-   * @param vLen the length of the "value" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("value".length -  offset)
+   *    the specified key.
+   * @param valueOffset the offset of the "value" array to be used, must be
+   *    non-negative and no longer than "key".length
+   * @param valueLength the length of the "value" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("value".length - offset)
    *
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
   public void merge(final ColumnFamilyHandle columnFamilyHandle,
-      final byte[] key, int offset, int len, final byte[] value, int vOffset, int vLen) throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    checkBounds(vOffset, vLen, value.length);
-    merge(nativeHandle_, key, offset, len, value, vOffset, vLen,
+          final byte[] key, final int keyOffset, final int keyLen,
+          final byte[] value, final int valueOffset, final int valueLength)
+      throws RocksDBException {
+    checkBounds(keyOffset, keyLen, key.length);
+    checkBounds(valueOffset, valueLength, value.length);
+    merge(nativeHandle_, key, keyOffset, keyLen, value, valueOffset, valueLength,
         columnFamilyHandle.nativeHandle_);
   }
 
@@ -924,25 +963,30 @@ public class RocksDB extends RocksObject {
    *
    * @param writeOpts {@link WriteOptions} for this write.
    * @param key the specified key to be merged.
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value the value to be merged with the current value for
    * the specified key.
-   * @param vOffset the offset of the "value" array to be used, must be non-negative and
-   *               no longer than "key".length
-   * @param vLen the length of the "value" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("value".length -  offset)
+   * @param valueOffset the offset of the "value" array to be used, must be
+   *    non-negative and no longer than "key".length
+   * @param valueLength the length of the "value" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("value".length - offset)
    *
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
-  public void merge(final WriteOptions writeOpts, final byte[] key, int offset, int len,
-      final byte[] value, int vOffset, int vLen) throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    checkBounds(vOffset, vLen, value.length);
+  public void merge(final WriteOptions writeOpts, final byte[] key,
+          final int keyOffset, final int keyLen, final byte[] value,
+          final int valueOffset, final int valueLength)
+      throws RocksDBException {
+    checkBounds(keyOffset, keyLen, key.length);
+    checkBounds(valueOffset, valueLength, value.length);
     merge(nativeHandle_, writeOpts.nativeHandle_,
-        key, offset, len, value, vOffset, vLen);
+        key, keyOffset, keyLen, value, valueOffset, valueLength);
   }
 
   /**
@@ -971,26 +1015,31 @@ public class RocksDB extends RocksObject {
    * @param columnFamilyHandle {@link ColumnFamilyHandle} instance
    * @param writeOpts {@link WriteOptions} for this write.
    * @param key the specified key to be merged.
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value the value to be merged with the current value for
    * the specified key.
-   * @param vOffset the offset of the "value" array to be used, must be non-negative and
-   *               no longer than "key".length
-   * @param vLen the length of the "value" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("value".length -  offset)
+   * @param valueOffset the offset of the "value" array to be used, must be
+   *    non-negative and no longer than "key".length
+   * @param valueLength the length of the "value" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("value".length - offset)
    *
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
   public void merge(final ColumnFamilyHandle columnFamilyHandle,
-      final WriteOptions writeOpts, final byte[] key, int offset, int len,
-      final byte[] value, int vOffset, int vLen) throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    checkBounds(vOffset, vLen, value.length);
+          final WriteOptions writeOpts, final byte[] key, final int keyOffset,
+          final int keyLen, final byte[] value, final int valueOffset,
+          final int valueLength)
+      throws RocksDBException {
+    checkBounds(keyOffset, keyLen, key.length);
+    checkBounds(valueOffset, valueLength, value.length);
     merge(nativeHandle_, writeOpts.nativeHandle_,
-        key, offset, len, value, vOffset, vLen,
+        key, keyOffset, keyLen, value, valueOffset, valueLength,
         columnFamilyHandle.nativeHandle_);
   }
 
@@ -1021,14 +1070,17 @@ public class RocksDB extends RocksObject {
    * Get the value associated with the specified key within column family*
    *
    * @param key the key to retrieve the value.
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value the out-value to receive the retrieved value.
-   * @param vOffset the offset of the "value" array to be used, must be non-negative and
-   *               no longer than "key".length
-   * @param vLen the length of the "value" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("value".length -  offset)
+   * @param valueOffset the offset of the "value" array to be used, must be
+   *    non-negative and no longer than "key".length
+   * @param valueLength the length of the "value" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("value".length - offset)
    *
    * @return The size of the actual value that matches the specified
    *     {@code key} in byte.  If the return value is greater than the
@@ -1040,10 +1092,13 @@ public class RocksDB extends RocksObject {
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
-  public int get(final byte[] key, int offset, int len, final byte[] value, int vOffset, int vLen) throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    checkBounds(vOffset, vLen, value.length);
-    return get(nativeHandle_, key, offset, len, value, vOffset, vLen);
+  public int get(final byte[] key, final int keyOffset, final int keyLen,
+          final byte[] value, final int valueOffset, final int valueLength)
+      throws RocksDBException {
+    checkBounds(keyOffset, keyLen, key.length);
+    checkBounds(valueOffset, valueLength, value.length);
+    return get(nativeHandle_, key, keyOffset, keyLen, value, valueOffset,
+            valueLength);
   }
 
   /**
@@ -1075,14 +1130,17 @@ public class RocksDB extends RocksObject {
    * @param columnFamilyHandle {@link org.rocksdb.ColumnFamilyHandle}
    *     instance
    * @param key the key to retrieve the value.
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value the out-value to receive the retrieved value.
-   * @param vOffset the offset of the "value" array to be used, must be non-negative and
-   *               no longer than "key".length
-   * @param vLen the length of the "value" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("value".length -  offset)
+   * @param valueOffset the offset of the "value" array to be used, must be
+   *    non-negative and no longer than "key".length
+   * @param valueLength the length of the "value" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("value".length - offset)
    *
    * @return The size of the actual value that matches the specified
    *     {@code key} in byte.  If the return value is greater than the
@@ -1094,12 +1152,14 @@ public class RocksDB extends RocksObject {
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
-  public int get(final ColumnFamilyHandle columnFamilyHandle, final byte[] key, int offset, int len,
-      final byte[] value, int vOffset, int vLen) throws RocksDBException, IllegalArgumentException {
-    checkBounds(offset, len, key.length);
-    checkBounds(vOffset, vLen, value.length);
-    return get(nativeHandle_, key, offset, len, value, vOffset, vLen,
-        columnFamilyHandle.nativeHandle_);
+  public int get(final ColumnFamilyHandle columnFamilyHandle, final byte[] key,
+          final int keyOffset, final int keyLen, final byte[] value,
+          final int valueOffset, final int valueLength)
+      throws RocksDBException, IllegalArgumentException {
+    checkBounds(keyOffset, keyLen, key.length);
+    checkBounds(valueOffset, valueLength, value.length);
+    return get(nativeHandle_, key, keyOffset, keyLen, value, valueOffset,
+            valueLength, columnFamilyHandle.nativeHandle_);
   }
 
   /**
@@ -1129,14 +1189,17 @@ public class RocksDB extends RocksObject {
    *
    * @param opt {@link org.rocksdb.ReadOptions} instance.
    * @param key the key to retrieve the value.
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value the out-value to receive the retrieved value.
-   * @param vOffset the offset of the "value" array to be used, must be non-negative and
-   *               no longer than "key".length
-   * @param vLen the length of the "value" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("value".length -  offset)
+   * @param valueOffset the offset of the "value" array to be used, must be
+   *    non-negative and no longer than "key".length
+   * @param valueLength the length of the "value" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("value".length - offset)
    * @return The size of the actual value that matches the specified
    *     {@code key} in byte.  If the return value is greater than the
    *     length of {@code value}, then it indicates that the size of the
@@ -1147,12 +1210,13 @@ public class RocksDB extends RocksObject {
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
-  public int get(final ReadOptions opt, final byte[] key, int offset, int len,
-      final byte[] value, int vOffset, int vLen) throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    checkBounds(vOffset, vLen, value.length);
+  public int get(final ReadOptions opt, final byte[] key, final int keyOffset,
+          final int keyLen, final byte[] value, final int valueOffset,
+          final int valueLength) throws RocksDBException {
+    checkBounds(keyOffset, keyLen, key.length);
+    checkBounds(valueOffset, valueLength, value.length);
     return get(nativeHandle_, opt.nativeHandle_,
-        key, offset, len, value, vOffset, vLen);
+        key, keyOffset, keyLen, value, valueOffset, valueLength);
   }
 
   /**
@@ -1187,14 +1251,17 @@ public class RocksDB extends RocksObject {
    *     instance
    * @param opt {@link org.rocksdb.ReadOptions} instance.
    * @param key the key to retrieve the value.
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param value the out-value to receive the retrieved value.
-   * @param vOffset the offset of the "value" array to be used, must be non-negative and
-   *               no longer than "key".length
-   * @param vLen the length of the "value" array to be used, must be non-negative and
-   *            must be non-negative and no larger than ("value".length -  offset)
+   * @param valueOffset the offset of the "value" array to be used, must be
+   *    non-negative and no longer than "key".length
+   * @param valueLength the length of the "value" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("value".length - offset)
    * @return The size of the actual value that matches the specified
    *     {@code key} in byte.  If the return value is greater than the
    *     length of {@code value}, then it indicates that the size of the
@@ -1206,12 +1273,14 @@ public class RocksDB extends RocksObject {
    *    native library.
    */
   public int get(final ColumnFamilyHandle columnFamilyHandle,
-      final ReadOptions opt, final byte[] key, int offset, int len, final byte[] value, int vOffset, int vLen)
+          final ReadOptions opt, final byte[] key, final int keyOffset,
+          final int keyLen, final byte[] value, final int valueOffset,
+          final int valueLength)
       throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    checkBounds(vOffset, vLen, value.length);
-    return get(nativeHandle_, opt.nativeHandle_, key, offset, len, value,
-        vOffset, vLen, columnFamilyHandle.nativeHandle_);
+    checkBounds(keyOffset, keyLen, key.length);
+    checkBounds(valueOffset, valueLength, value.length);
+    return get(nativeHandle_, opt.nativeHandle_, key, keyOffset, keyLen, value,
+        valueOffset, valueLength, columnFamilyHandle.nativeHandle_);
   }
 
   /**
@@ -1236,18 +1305,21 @@ public class RocksDB extends RocksObject {
    * returned if the specified key is not found.
    *
    * @param key the key retrieve the value.
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @return a byte array storing the value associated with the input key if
    *     any.  null if it does not find the specified key.
    *
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
-  public byte[] get(final byte[] key, int offset, int len) throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    return get(nativeHandle_, key, offset, len);
+  public byte[] get(final byte[] key, final int keyOffset, final int keyLen)
+      throws RocksDBException {
+    checkBounds(keyOffset, keyLen, key.length);
+    return get(nativeHandle_, key, keyOffset, keyLen);
   }
 
   /**
@@ -1278,9 +1350,11 @@ public class RocksDB extends RocksObject {
    * @param columnFamilyHandle {@link org.rocksdb.ColumnFamilyHandle}
    *     instance
    * @param key the key retrieve the value.
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @return a byte array storing the value associated with the input key if
    *     any.  null if it does not find the specified key.
    *
@@ -1288,9 +1362,10 @@ public class RocksDB extends RocksObject {
    *    native library.
    */
   public byte[] get(final ColumnFamilyHandle columnFamilyHandle,
-      final byte[] key, int offset, int len) throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    return get(nativeHandle_, key, offset, len,
+          final byte[] key, final int keyOffset, final int keyLen)
+      throws RocksDBException {
+    checkBounds(keyOffset, keyLen, key.length);
+    return get(nativeHandle_, key, keyOffset, keyLen,
         columnFamilyHandle.nativeHandle_);
   }
 
@@ -1318,9 +1393,11 @@ public class RocksDB extends RocksObject {
    * returned if the specified key is not found.
    *
    * @param key the key retrieve the value.
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param opt Read options.
    * @return a byte array storing the value associated with the input key if
    *     any.  null if it does not find the specified key.
@@ -1328,10 +1405,11 @@ public class RocksDB extends RocksObject {
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
-  public byte[] get(final ReadOptions opt, final byte[] key, int offset, int len)
+  public byte[] get(final ReadOptions opt, final byte[] key,
+          final int keyOffset, final int keyLen)
       throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    return get(nativeHandle_, opt.nativeHandle_, key, offset, len);
+    checkBounds(keyOffset, keyLen, key.length);
+    return get(nativeHandle_, opt.nativeHandle_, key, keyOffset, keyLen);
   }
 
   /**
@@ -1363,9 +1441,11 @@ public class RocksDB extends RocksObject {
    * @param columnFamilyHandle {@link org.rocksdb.ColumnFamilyHandle}
    *     instance
    * @param key the key retrieve the value.
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    * @param opt Read options.
    * @return a byte array storing the value associated with the input key if
    *     any.  null if it does not find the specified key.
@@ -1374,9 +1454,10 @@ public class RocksDB extends RocksObject {
    *    native library.
    */
   public byte[] get(final ColumnFamilyHandle columnFamilyHandle,
-      final ReadOptions opt, final byte[] key, int offset, int len) throws RocksDBException {
-    checkBounds(offset, len, key.length);
-    return get(nativeHandle_, opt.nativeHandle_, key, offset, len,
+          final ReadOptions opt, final byte[] key, final int keyOffset,
+          final int keyLen) throws RocksDBException {
+    checkBounds(keyOffset, keyLen, key.length);
+    return get(nativeHandle_, opt.nativeHandle_, key, keyOffset, keyLen,
         columnFamilyHandle.nativeHandle_);
   }
 
@@ -1609,15 +1690,18 @@ public class RocksDB extends RocksObject {
    * did not exist in the database.
    *
    * @param key Key to delete within database
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    *
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
-  public void delete(final byte[] key, int offset, int len) throws RocksDBException {
-    delete(nativeHandle_, key, offset, len);
+  public void delete(final byte[] key, final int keyOffset, final int keyLen)
+      throws RocksDBException {
+    delete(nativeHandle_, key, keyOffset, keyLen);
   }
 
   /**
@@ -1665,16 +1749,20 @@ public class RocksDB extends RocksObject {
    * @param columnFamilyHandle {@link org.rocksdb.ColumnFamilyHandle}
    *     instance
    * @param key Key to delete within database
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    *
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
   public void delete(final ColumnFamilyHandle columnFamilyHandle,
-      final byte[] key, int offset, int len) throws RocksDBException {
-    delete(nativeHandle_, key, offset, len, columnFamilyHandle.nativeHandle_);
+          final byte[] key, final int keyOffset, final int keyLen)
+      throws RocksDBException {
+    delete(nativeHandle_, key, keyOffset, keyLen,
+            columnFamilyHandle.nativeHandle_);
   }
 
   /**
@@ -1719,16 +1807,19 @@ public class RocksDB extends RocksObject {
    *
    * @param writeOpt WriteOptions to be used with delete operation
    * @param key Key to delete within database
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    *
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
-  public void delete(final WriteOptions writeOpt, final byte[] key, int offset, int len)
+  public void delete(final WriteOptions writeOpt, final byte[] key,
+          final int keyOffset, final int keyLen)
       throws RocksDBException {
-    delete(nativeHandle_, writeOpt.nativeHandle_, key, offset, len);
+    delete(nativeHandle_, writeOpt.nativeHandle_, key, keyOffset, keyLen);
   }
 
   /**
@@ -1782,17 +1873,20 @@ public class RocksDB extends RocksObject {
    *     instance
    * @param writeOpt WriteOptions to be used with delete operation
    * @param key Key to delete within database
-   * @param offset the offset of the "key" array to be used, must be non-negative and
-   *               no larger than "key".length
-   * @param len the length of the "key" array to be used, must be non-negative and
+   * @param keyOffset the offset of the "key" array to be used, must be
+   *    non-negative and no larger than "key".length
+   * @param keyLen the length of the "key" array to be used, must be
+   *    non-negative and must be non-negative and no larger than
+   *    ("key".length - offset)
    *
    * @throws RocksDBException thrown if error happens in underlying
    *    native library.
    */
   public void delete(final ColumnFamilyHandle columnFamilyHandle,
-      final WriteOptions writeOpt, final byte[] key, int offset, int len)
+          final WriteOptions writeOpt, final byte[] key, final int keyOffset,
+          final int keyLen)
       throws RocksDBException {
-    delete(nativeHandle_, writeOpt.nativeHandle_, key, offset, len,
+    delete(nativeHandle_, writeOpt.nativeHandle_, key, keyOffset, keyLen,
         columnFamilyHandle.nativeHandle_);
   }
 
