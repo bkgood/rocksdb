@@ -5324,6 +5324,38 @@ rocksdb_pinnableslice_t* rocksdb_get_pinned(
   return v;
 }
 
+rocksdb_pinnableslice_t* rocksdb_get_pinned_into(
+    rocksdb_t* db, const rocksdb_readoptions_t* options, const char* key,
+    size_t keylen, rocksdb_pinnableslice_t** value, char** errptr) {
+  rocksdb_column_family_handle_t cf;
+  cf.rep = db->rep->DefaultColumnFamily();
+
+  return rocksdb_get_pinned_cf_into(db, options, &cf, key, keylen, value,
+                                    errptr);
+}
+
+rocksdb_pinnableslice_t* rocksdb_get_pinned_cf_into(
+    rocksdb_t* db, const rocksdb_readoptions_t* options,
+    rocksdb_column_family_handle_t* column_family, const char* key,
+    size_t keylen, rocksdb_pinnableslice_t** value, char** errptr) {
+  if (*value == nullptr) {
+    *value = new (rocksdb_pinnableslice_t);
+  }
+
+  Status s = db->rep->Get(options->rep, column_family->rep, Slice(key, keylen),
+                          &((*value)->rep));
+
+  if (!s.ok()) {
+    if (!s.IsNotFound()) {
+      SaveError(errptr, s);
+    }
+
+    return nullptr;
+  }
+
+  return *value;
+}
+
 rocksdb_pinnableslice_t* rocksdb_get_pinned_cf(
     rocksdb_t* db, const rocksdb_readoptions_t* options,
     rocksdb_column_family_handle_t* column_family, const char* key,
@@ -5342,6 +5374,8 @@ rocksdb_pinnableslice_t* rocksdb_get_pinned_cf(
 }
 
 void rocksdb_pinnableslice_destroy(rocksdb_pinnableslice_t* v) { delete v; }
+
+void rocksdb_pinnableslice_reset(rocksdb_pinnableslice_t* v) { v->rep.Reset(); }
 
 const char* rocksdb_pinnableslice_value(const rocksdb_pinnableslice_t* v,
                                         size_t* vlen) {

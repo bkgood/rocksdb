@@ -2262,14 +2262,23 @@ extern ROCKSDB_LIBRARY_API void rocksdb_free(void* ptr);
 extern ROCKSDB_LIBRARY_API rocksdb_pinnableslice_t* rocksdb_get_pinned(
     rocksdb_t* db, const rocksdb_readoptions_t* options, const char* key,
     size_t keylen, char** errptr);
+extern ROCKSDB_LIBRARY_API rocksdb_pinnableslice_t* rocksdb_get_pinned_into(
+    rocksdb_t* db, const rocksdb_readoptions_t* options, const char* key,
+    size_t keylen, rocksdb_pinnableslice_t** value, char** errptr);
 extern ROCKSDB_LIBRARY_API rocksdb_pinnableslice_t* rocksdb_get_pinned_cf(
     rocksdb_t* db, const rocksdb_readoptions_t* options,
     rocksdb_column_family_handle_t* column_family, const char* key,
     size_t keylen, char** errptr);
+extern ROCKSDB_LIBRARY_API rocksdb_pinnableslice_t* rocksdb_get_pinned_cf_into(
+    rocksdb_t* db, const rocksdb_readoptions_t* options,
+    rocksdb_column_family_handle_t* column_family, const char* key,
+    size_t keylen, rocksdb_pinnableslice_t** value, char** errptr);
 extern ROCKSDB_LIBRARY_API void rocksdb_pinnableslice_destroy(
     rocksdb_pinnableslice_t* v);
 extern ROCKSDB_LIBRARY_API const char* rocksdb_pinnableslice_value(
     const rocksdb_pinnableslice_t* t, size_t* vlen);
+extern ROCKSDB_LIBRARY_API void rocksdb_pinnableslice_reset(
+    rocksdb_pinnableslice_t* v);
 
 extern ROCKSDB_LIBRARY_API rocksdb_memory_consumers_t*
 rocksdb_memory_consumers_create(void);

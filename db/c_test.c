@@ -156,6 +156,19 @@ static void CheckPinGet(rocksdb_t* db, const rocksdb_readoptions_t* options,
   rocksdb_pinnableslice_destroy(p);
 }
 
+static void CheckPinGetInto(rocksdb_t* db, const rocksdb_readoptions_t* options,
+                            const char* key, const char* expected) {
+  char* err = NULL;
+  size_t val_len;
+  const char* val;
+  rocksdb_pinnableslice_t* p = NULL;
+  p = rocksdb_get_pinned_into(db, options, key, strlen(key), &p, &err);
+  CheckNoError(err);
+  val = rocksdb_pinnableslice_value(p, &val_len);
+  CheckEqual(expected, val_len == 0 ? NULL : val, val_len);
+  rocksdb_pinnableslice_destroy(p);
+}
+
 static void CheckPinGetCF(rocksdb_t* db, const rocksdb_readoptions_t* options,
                           rocksdb_column_family_handle_t* handle,
                           const char* key, const char* expected) {
@@ -970,6 +983,13 @@ int main(int argc, char** argv) {
     CheckPinGet(db, roptions, "box", "c");
     CheckPinGet(db, roptions, "foo", "hello");
     CheckPinGet(db, roptions, "notfound", NULL);
+  }
+
+  StartPhase("pin_get_into");
+  {
+    CheckPinGetInto(db, roptions, "box", "c");
+    CheckPinGetInto(db, roptions, "foo", "hello");
+    CheckPinGetInto(db, roptions, "notfound", NULL);
   }
 
   StartPhase("approximate_sizes");
